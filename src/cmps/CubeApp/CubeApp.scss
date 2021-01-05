@@ -2,71 +2,136 @@
     box-sizing: border-box;
 }
 
+$size: 300px; // cube length
+
 .cube-app {
     display: flex;
-    min-height: 600px;
-    justify-content: center;
+    min-height: 500px;
     align-items: center;
     gap: 2rem;
 
-    .hidden {
-        display: none;
-      }
+    button {
+        border: 0.5px solid rgb(255, 255, 255);
+        border-radius: 0.3rem;
+    }
 
-    .roll-cube-btn {
-        margin-left: 6rem;
 
-        .roll-btn {
-            display: inline-block;
-            background-color: red;
-            color: #fff;
-            padding: 0.1rem 0.2rem;
-            border-color: rgba(100, 69, 69, 0.288);
-            border-radius: 0.1rem;
-            text-decoration: none;
+    .CubeEdit {
+        display: flex;
+        flex-direction: column;
+        margin-left: 3.3rem;
+
+
+        label {
+            margin-left: 0.15rem;
+            margin-bottom: 0;
+            line-height: 1rem;
             font-weight: bold;
-            width: 7rem;
-            height: 3rem;
+            color:rgb(53, 51, 51)
+        }
+
+        .save-clear-btns {
+            margin-top: 1rem;
+            width: 13rem;
+            border: 0.0px solid rgb(255, 255, 255);
+            display: flex;
+            justify-content: space-between;
+
+
+            .clear-btn,
+            .save-btn {
+                background-color: rgb(206, 188, 188);
+                color: rgb(255, 255, 255);
+                padding: 0.1rem 0.2rem;
+                border: 0.0px solid rgb(255, 255, 255);
+                text-decoration: none;
+                font-weight: bold;
+                width: 6rem;
+                height: 2rem;
+            }
+            .clear-btn:hover {background-color:rgb(197, 183, 183)}
+            .save-btn:hover {background-color:rgb(197, 183, 183)}
+
+
         }
     }
 
-    .edit-cube-btn{
-        margin-left: 1rem;
+    .hidden {
+        display: none;
+    }
 
-        .edit-btn {
+    .roll-cube-btn {
+        margin-right: 6rem;
+
+        .roll-btn {
             display: inline-block;
-            background-color: green;
-            color: #fff;
+            background-color: #dd114e;
+            color: rgb(255, 255, 255);
+            border: 0.0px solid rgb(255, 255, 255);
+            border-radius: 0.5rem;
             padding: 0.1rem 0.2rem;
-            border-color: rgba(100, 69, 69, 0.288);
-            border-radius: 0.1rem;
             text-decoration: none;
             font-weight: bold;
             width: 7rem;
-            height: 3rem;
+            height: 2.5rem;
         }
+        .roll-btn:hover {background-color:#c21348}
+    }
+
+    .edit-cube-btn {
+        margin-right: 1rem;
+        margin-left: 6.5rem;
+
+        .edit-btn {
+            display: inline-block;
+            background-color: #3a9679;
+            border-radius: 0.5rem;
+            color: #fff;
+            border: 0.0px solid rgb(255, 255, 255);
+            padding: 0.1rem 0.2rem;
+            text-decoration: none;
+            font-weight: bold;
+            width: 7rem;
+            height: 2.5rem;
+        }
+        .edit-btn:hover {background-color:#2e8569}
 
     }
 
     .cube-input {
         width: 100%;
+        margin-bottom: 1rem;
+        margin-top: 0;
     }
 
     .preview-btn {
-        margin-left: 0.1rem;
+        margin-left: 0.5rem;
+        font-size: 12px;
         display: inline-block;
-        background-color: rgb(36, 139, 36);
-        color: #fff;
+        // background-color: #917ab6;
+        background-color: #3a9679;
+        //  background-color: #ee6e24;
+        color: rgb(255, 255, 255);
         padding: 0.1rem 0.2rem;
-        border-color: rgba(100, 69, 69, 0.288);
-        border-radius: 0.1rem;
+        border: 0.0px solid rgb(255, 255, 255);
+        border-radius: 0.3rem;
         text-decoration: none;
-        width: 5rem;
+        width: 4rem;
         height: 1.5rem;
     }
+    .preview-btn:hover {background-color:#2e8569}
 
     input {
+        height: 1.5rem;
         margin-right: 0.0rem;
+        margin-top: 0.2rem;
+        outline: none;
+        border: 0.5px solid rgb(221, 221, 221);
+        border-radius: 0.3rem;
+    }
+
+    ::placeholder {
+        color: rgb(212, 212, 212);
     }
 }
 
@@ -74,11 +139,12 @@
 .scene {
     display: flex;
     justify-content: center;
-    width: 200px;
-    height: 200px;
+    width: $size;
+    height: $size;
     perspective: 600px;
 
     .cube {
+        margin-top: 1.5rem;
         width: 100%;
         height: 100%;
         position: relative;
@@ -89,22 +155,24 @@
         .cube__face {
             display: flex;
             justify-content: center;
-            // align-items: center;
             position: absolute;
-            width: 200px;
-            height: 200px;
-            border: 1px solid black;
+            width: $size;
+            height: $size;
+            border: 1.5px solid rgb(228, 228, 228);
             border-radius: 0.5rem;
-            // line-height: 200px;
             font-size: 32px;
             font-weight: bold;
             color: white;
             overflow-wrap: break-word;
+            background-repeat: no-repeat;
+            background-size: $size $size;
+            opacity: 0.95;
 
             p {
                 word-wrap: break-word;
+                overflow: hidden;
                 text-align: center;
-                padding-top: 3rem;
+                padding-top: 2.5rem;
                 margin-block-start: 0em;
                 margin-block-end: 0em;
                 width: 190px;
@@ -112,40 +180,45 @@
                 margin: 0;
                 direction: rtl;
             }
-
-
-
         }
 
         .cube__face--front {
-            background-color: rgb(255, 0, 0);
-            transform: rotateY(0deg) translateZ(100px);
+            // background-color: rgb(255, 0, 0);
+            background-image: url('../../styles/imgs/1.jpg');
+            // transform: rotateY(0deg) translate3D(0,0,100px);
+            transform: translate3d(0, 0, $size/2);
 
         }
-
-        .cube__face--right {
-            background-color: rgb(0, 0, 255);
-            transform: rotateY(90deg) translateZ(100px);
-        }
-
         .cube__face--back {
-            background-color: rgb(255, 255, 0);
-            transform: rotateY(180deg) translateZ(100px);
+            // background-color: rgb(255, 255, 0);
+            background-image: url('../../styles/imgs/3.png');
+            // transform: rotateY(180deg) translateZ(100px);
+            transform: rotateY(180deg) translate3d(0, 0, $size/2);
         }
 
         .cube__face--left {
-            background-color: rgb(0, 128, 0);
-            transform: rotateY(-90deg) translateZ(100px);
+            // background-color: rgb(0, 128, 0);
+            background-image: url('../../styles/imgs/4.png');
+            transform: rotateY(-90deg) translate3d(0, 0, $size/2);
+        }
+
+        .cube__face--right {
+            // background-color: rgb(0, 0, 255);
+            background-image: url('../../styles/imgs/2.png');
+            // transform: rotateY(90deg) translateZ(100px);
+            transform: rotateY(90deg) translate3d(0, 0, $size/2);
         }
 
         .cube__face--top {
-            background-color: rgb(0, 0, 0);
-            transform: rotateX(90deg) translateZ(100px);
+            // background-color: rgb(0, 0, 0);
+            background-image: url('../../styles/imgs/5.png');
+            transform: rotateX(90deg) translate3d(0, 0, $size/2);
         }
 
         .cube__face--bottom {
-            background-color: rgb(255, 192, 203);
-            transform: rotateX(-90deg) translateZ(100px);
+            // background-color: rgb(255, 192, 203);
+            background-image: url('../../styles/imgs/6.png');
+            transform: rotateX(-90deg) translate3d(0, 0, $size/2);
         }
     }
 }
@@ -181,10 +254,4 @@
 .cube.show-roll {
     transform: translateZ(-100px) rotateY(1000deg) rotateX(500deg);
     ;
-}
-
-.CubeEdit {
-    display: flex;
-    flex-direction: column;
-    margin-left: 6rem;
 }

@@ -3,9 +3,12 @@
 }
 
 html{
-    background-color: rgb(236, 222, 222);
-    font-family: 'Mallanna', sans-serif;
+    // background-color: rgb(236, 222, 222);
+    // background-color: #eeebe7;
+    background: url('../../styles/imgs/9.png');
+    font-family: 'Varela Round', sans-serif;
 }
+
 
 body {
     margin: 0;
@@ -15,4 +18,5 @@ body {
 button{
     cursor: pointer;
     outline: none;
+    font-family: 'Varela Round', sans-serif;
 }
