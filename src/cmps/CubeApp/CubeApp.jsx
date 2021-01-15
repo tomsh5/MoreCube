@@ -139,7 +139,7 @@ const clearCube = () => {
       <div className="container">
         <section className={`cube-app ${lng}`}>
           <div className={`CubeEdit ${hidden}`}>
-            <form id="edit-form" onSubmit={handleSubmit} >
+            <form className="edit-form" id="edit-form" onSubmit={handleSubmit} >
             <label>{t('sides.front')}</label>
             <div className="cube-input">
               <input name="front" type="text" maxLength="36" onChange={handleChange} placeholder={t('type.title')} />
