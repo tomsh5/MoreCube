@@ -1,0 +1,19 @@
+{
+    "roll": {
+        "title":"Roll"
+    },
+    "preview": {"title": "preview"},
+    "type":{"title": "type..."},
+    "sides":{
+        "front": "Front",
+        "back": "Back",
+        "right": "Right",
+        "left": "Left",
+        "top": "Top",
+        "bottom": "Bottom"
+    },
+    "msg":{
+        "save": "The cube was saved successfuly",
+        "clear": "The cube was cleard"
+    }
+}

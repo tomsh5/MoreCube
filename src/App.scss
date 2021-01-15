@@ -2,3 +2,12 @@
 @import './styles/basics/base.scss';
 @import './styles/basics/layout.scss';
 @import './styles/basics/helpers.scss';
+
+
+//SETUP
+@import './styles/setup/variables.scss';
+@import './styles/setup/mixins.scss';
+
+
+//CMPS
+@import './cmps/CubeApp/CubeApp.scss'

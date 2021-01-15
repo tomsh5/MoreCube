@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './CubeApp.scss';
 import storageService from '../../services/storageService'
-import Modal from '../Modal/Modal'
-import useModal from '../../hooks/useModal';
+import { Header } from '../Header/Header';
+import { Footer } from '../Footer/Footer';
+import { useSnackbar } from 'notistack';
 
-export function CubeApp() {
+
+export function CubeApp(props) {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [lng, setLng] = useState('en')
+  const [lngBtn, setLngBtn] = useState('HE')
+  const { t, i18n } = useTranslation('common');
   const [cubeSide, setCubeSide] = useState('diagnol');
   const [prevNum, setPrevNum] = useState(0)
   const [hidden, setHidden] = useState('')
@@ -12,49 +19,41 @@ export function CubeApp() {
     front: 'front', back: 'back', right: 'right',
     left: 'left', top: 'top', bottom: 'bottom'
   });
-  const [editBtnTxt, seteEditBtnTxt] = useState('Close Edit');
-  const {isShowing, toggle} = useModal();
-  const [modalTxt, setModalTxt] = useState('');
+  const [editBtn, seteEditBtn] = useState(<i className="far fa-eye"></i>);
 
   useEffect(() => {
     const savedCube = storageService.load('cube')
 
-    if (savedCube){
+    if (savedCube) {
       setCube(savedCube)
     }
-    console.log(savedCube);
   }, []);
 
   function rollCube() {
     let randomNum = getRandomInt(1, 7)
 
     while (randomNum === prevNum) {
-      console.log('same');
       randomNum = getRandomInt(1, 7)
     }
-    console.log(`prev: ${prevNum}, curr: ${randomNum}`);
     let randomSide = getRandomSide(randomNum)
-    console.log(randomSide);
     setCubeSide('roll')
 
     setTimeout(function () { setCubeSide(randomSide) }, 2000);
     setPrevNum(randomNum)
   }
 
-  function editCube() {
+  function onEditCube() {
     setHidden('hidden')
-    seteEditBtnTxt('Edit')
-    if (hidden){
+    seteEditBtn(<i className="far fa-edit"></i>)
+    if (hidden) {
       setHidden('')
-      seteEditBtnTxt('Close Edit')
+      seteEditBtn(<i className="far fa-eye"></i>)
     }
-    console.log(hidden);
   }
 
 
   function toggleCube(side) {
     setCubeSide(side)
-    console.log(`${side}`);
   }
 
   function getRandomInt(min, max) {
@@ -91,78 +90,110 @@ export function CubeApp() {
 
   async function saveCube(cube) {
     await storageService.post(`cube`, cube);
-    setModalTxt('The Cube Was Saved Successfully!')
-    toggle()
+    enqueueSnackbar(t("msg.save"),{
+      anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+      },
+      autoHideDuration: 2000,
+      variant: 'success',
+  });
   }
-
-  function clearCube() {
+const clearCube = () => {
     setCube({
       front: '', back: '', right: '',
       left: '', top: '', bottom: ''
     })
-    setModalTxt('The Cube Was cleared')
-    toggle()
+    document.getElementById("edit-form").reset();
+    enqueueSnackbar(t("msg.clear"),{
+      anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+      },
+      autoHideDuration: 2000,
+      variant: 'success',
+  });
+   
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault();
+  };
+
+  function changeLang(appLng) {
+      if (appLng === 'he'){
+        setLng('en')
+        i18n.changeLanguage('en')
+        setLngBtn('HE')
+      }
+      else {
+        setLng('he')
+        i18n.changeLanguage('he')
+        setLngBtn('EN')
+      }
   }
 
   return (
-    <section className="cube-app">
-      <div className={`CubeEdit ${hidden}`}>
-        <label>Front</label>
-        <div className="cube-input">
-          <input name="front" type="text"  maxlength="36" onChange={handleChange} placeholder="Type..." />
-          <button className="preview-btn" onClick={() => toggleCube('front')}>Preview</button>
-        </div>
-        <label>Back</label>
-        <div className="cube-input">
-          <input name="back" type="text" onChange={handleChange} placeholder="Type..." />
-          <button className="preview-btn" onClick={() => toggleCube('back')}>Preview</button>
-        </div>
-        <label>Right</label>
-        <div className="cube-input">
-          <input name="right" type="text" onChange={handleChange} placeholder="Type..." />
-          <button className="preview-btn" onClick={() => toggleCube('right')}>Preview</button>
-        </div>
-        <label>Left</label>
-        <div className="cube-input">
-          <input name="left" type="text" onChange={handleChange} placeholder="Type..." />
-          <button className="preview-btn" onClick={() => toggleCube('left')}>Preview</button>
-        </div>
-        <label>Top</label>
-        <div className="cube-input">
-          <input name="top" type="text" onChange={handleChange} placeholder="Type..." />
-          <button className="preview-btn" onClick={() => toggleCube('top')}>Preview</button>
-        </div>
-        <label>Bottom</label>
-        <div className="cube-input">
-          <input name="bottom" type="text" onChange={handleChange} placeholder="Type..." />
-          <button className="preview-btn" onClick={() => toggleCube('bottom')}>Preview</button>
-        </div>
-        <div className="save-clear-btns">
-        <button className="clear-btn" onClick={() => clearCube()}>Clear all</button>
-        <button className="save-btn" onClick={() => saveCube(cube)}>Save</button>
-        </div>
+    <div>
+      <Header editBtn={editBtn} onEditCube={onEditCube} changeLang={changeLang} lng={lng} lngBtn={lngBtn}/>
+      <div className="container">
+        <section className={`cube-app ${lng}`}>
+          <div className={`CubeEdit ${hidden}`}>
+            <form id="edit-form" onSubmit={handleSubmit} >
+            <label>{t('sides.front')}</label>
+            <div className="cube-input">
+              <input name="front" type="text" maxLength="36" onChange={handleChange} placeholder={t('type.title')} />
+              <button className="preview-btn" onClick={() => toggleCube('front')}>{t('preview.title')}</button>
+            </div>
+            <label>{t('sides.back')}</label>
+            <div className="cube-input">
+              <input name="back" type="text" onChange={handleChange} placeholder={t('type.title')}/>
+              <button className="preview-btn" onClick={() => toggleCube('back')}>{t('preview.title')}</button>
+            </div>
+            <label>{t('sides.right')}</label>
+            <div className="cube-input">
+              <input name="right" type="text" onChange={handleChange} placeholder={t('type.title')} />
+              <button className="preview-btn" onClick={() => toggleCube('right')}>{t('preview.title')}</button>
+            </div>
+            <label>{t('sides.left')}</label>
+            <div className="cube-input">
+              <input name="left" type="text" onChange={handleChange} placeholder={t('type.title')} />
+              <button className="preview-btn" onClick={() => toggleCube('left')}>{t('preview.title')}</button>
+            </div>
+            <label>{t('sides.top')}</label>
+            <div className="cube-input">
+              <input name="top" type="text" onChange={handleChange} placeholder={t('type.title')}/>
+              <button className="preview-btn" onClick={() => toggleCube('top')}>{t('preview.title')}</button>
+            </div>
+            <label>{t('sides.bottom')}</label>
+            <div className="cube-input">
+              <input name="bottom" type="text" onChange={handleChange} placeholder={t('type.title')} />
+              <button className="preview-btn" onClick={() => toggleCube('bottom')}>{t('preview.title')}</button>
+            </div>
+            <div className="save-clear-btns">
+              <button className="clear-btn" onClick={() => clearCube()}><i className="far fa-trash-alt"></i></button>
+              <button className="save-btn" onClick={() => saveCube(cube)}><i className="far fa-save"></i></button>
+            </div>
+            </form>
+          </div>
+          <div className="roll-cube-btn">
+            <button className="roll-btn" onClick={() => rollCube()}>{t('roll.title')}</button>
+          </div>
+          <div className="cube-container">
+            <div className="scene">
+              <div className={`cube show-${cubeSide}`}>
+                <div className="cube__face cube__face--front"><p>{cube.front}</p> </div>
+                <div className="cube__face cube__face--back"><p>{cube.back}</p></div>
+                <div className="cube__face cube__face--right"><p>{cube.right}</p></div>
+                <div className="cube__face cube__face--left"><p>{cube.left}</p></div>
+                <div className="cube__face cube__face--top"><p>{cube.top}</p></div>
+                <div className="cube__face cube__face--bottom"><p>{cube.bottom}</p></div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-      <div className="edit-cube-btn"> 
-        <button className="edit-btn" onClick={() => editCube()}>{editBtnTxt}</button>
-      </div>
-      <div className="roll-cube-btn"> 
-        <button className="roll-btn" onClick={() => rollCube()}>Roll</button>
-      </div>
-      <div className="scene">
-        <div className={`cube show-${cubeSide}`}>
-          <div className="cube__face cube__face--front"><p>{cube.front}</p> </div>
-          <div className="cube__face cube__face--back"><p>{cube.back}</p></div>
-          <div className="cube__face cube__face--right"><p>{cube.right}</p></div>
-          <div className="cube__face cube__face--left"><p>{cube.left}</p></div>
-          <div className="cube__face cube__face--top"><p>{cube.top}</p></div>
-          <div className="cube__face cube__face--bottom"><p>{cube.bottom}</p></div>
-        </div>
-      </div>
-      <Modal
-        isShowing={isShowing}
-        hide={toggle}
-        txt = {modalTxt}
-      />
-    </section>
+      <Footer/>
+    </div>
   );
 }

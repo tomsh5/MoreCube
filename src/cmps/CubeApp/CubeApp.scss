@@ -2,13 +2,57 @@
     box-sizing: border-box;
 }
 
+
+
+@import '../../styles/setup/variables.scss';
+@import '../../styles/setup/mixins.scss';
+
+
+:root {
+    --size: 300px;
+}
+
 $size: 300px; // cube length
+$medium-size: 250px;
+$noraml-size: 200px;
+$small-size: 150px;
+
+.container {
+    min-height: 83.5vh;
+
+    @include for-normal-layout {
+        min-height: 82vh;
+    }
+}
+
+.he{
+    direction: rtl;
+
+    .CubeEdit {
+        margin-right: 2.3rem;
+
+        .preview-btn {
+            margin-right: 0.5rem;
+            margin-left: 0;
+    }
+    }
+}
+.en{
+    direction: ltr;
+}
 
 .cube-app {
     display: flex;
     min-height: 500px;
     align-items: center;
-    gap: 2rem;
+    gap: 0rem;
+    overflow-x: hidden;
+
+    @include for-normal-layout {
+        flex-direction: column-reverse;
+        min-height: 350px;
+        margin-top: 2rem;
+    }
 
     button {
         border: 0.5px solid rgb(255, 255, 255);
@@ -19,24 +63,31 @@ $size: 300px; // cube length
     .CubeEdit {
         display: flex;
         flex-direction: column;
-        margin-left: 3.3rem;
+        margin-left: 2.3rem;
 
+        @include for-normal-layout {
+            margin: 2rem 0rem 3rem 1rem;
+        }
 
         label {
             margin-left: 0.15rem;
             margin-bottom: 0;
             line-height: 1rem;
             font-weight: bold;
-            color:rgb(53, 51, 51)
+            color: rgb(53, 51, 51)
         }
 
         .save-clear-btns {
             margin-top: 1rem;
-            width: 13rem;
+            width: 7rem;
             border: 0.0px solid rgb(255, 255, 255);
             display: flex;
             justify-content: space-between;
 
+            .fa-save,
+            .fa-trash-alt {
+                font-size: 1.5rem;
+            }
 
             .clear-btn,
             .save-btn {
@@ -46,13 +97,14 @@ $size: 300px; // cube length
                 border: 0.0px solid rgb(255, 255, 255);
                 text-decoration: none;
                 font-weight: bold;
-                width: 6rem;
+                width: 3rem;
                 height: 2rem;
+
+                &hover {
+                    background-color: rgb(197, 183, 183)
+                }
+
             }
-            .clear-btn:hover {background-color:rgb(197, 183, 183)}
-            .save-btn:hover {background-color:rgb(197, 183, 183)}
-
-
         }
     }
 
@@ -61,8 +113,9 @@ $size: 300px; // cube length
     }
 
     .roll-cube-btn {
-        margin-right: 6rem;
-
+        display: flex;
+        width: 32vw;
+        justify-content: center;
         .roll-btn {
             display: inline-block;
             background-color: #dd114e;
@@ -75,31 +128,14 @@ $size: 300px; // cube length
             width: 7rem;
             height: 2.5rem;
         }
-        .roll-btn:hover {background-color:#c21348}
-    }
 
-    .edit-cube-btn {
-        margin-right: 1rem;
-        margin-left: 6.5rem;
-
-        .edit-btn {
-            display: inline-block;
-            background-color: #3a9679;
-            border-radius: 0.5rem;
-            color: #fff;
-            border: 0.0px solid rgb(255, 255, 255);
-            padding: 0.1rem 0.2rem;
-            text-decoration: none;
-            font-weight: bold;
-            width: 7rem;
-            height: 2.5rem;
+        .roll-btn:hover {
+            background-color: #c21348
         }
-        .edit-btn:hover {background-color:#2e8569}
-
     }
 
     .cube-input {
-        width: 100%;
+        width: 16rem;
         margin-bottom: 1rem;
         margin-top: 0;
     }
@@ -108,9 +144,7 @@ $size: 300px; // cube length
         margin-left: 0.5rem;
         font-size: 12px;
         display: inline-block;
-        // background-color: #917ab6;
-        background-color: #3a9679;
-        //  background-color: #ee6e24;
+        background-color: #e97f1b;
         color: rgb(255, 255, 255);
         padding: 0.1rem 0.2rem;
         border: 0.0px solid rgb(255, 255, 255);
@@ -119,7 +153,10 @@ $size: 300px; // cube length
         width: 4rem;
         height: 1.5rem;
     }
-    .preview-btn:hover {background-color:#2e8569}
+
+    .preview-btn:hover {
+        background-color: #dd720e
+    }
 
     input {
         height: 1.5rem;
@@ -135,6 +172,17 @@ $size: 300px; // cube length
     }
 }
 
+.cube-container {
+    min-width: 500px;
+    display: flex;
+    margin-left: 5rem;
+
+    @include for-normal-layout {
+        justify-content: center;
+        margin-left: 0rem;
+        margin-bottom: 4rem;
+    }
+}
 
 .scene {
     display: flex;
@@ -142,6 +190,19 @@ $size: 300px; // cube length
     width: $size;
     height: $size;
     perspective: 600px;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+
+    @include for-wide-layout {
+        width: $medium-size;
+        height: $medium-size;
+    }
+
+    @include for-normal-layout {
+        width: $noraml-size;
+        height: $noraml-size;
+    }
+
 
     .cube {
         margin-top: 1.5rem;
@@ -151,6 +212,8 @@ $size: 300px; // cube length
         transform-style: preserve-3d;
         transform: translateZ(-100px);
         transition: transform 1s;
+
+        @include for-normal-layout {}
 
         .cube__face {
             display: flex;
@@ -168,57 +231,122 @@ $size: 300px; // cube length
             background-size: $size $size;
             opacity: 0.95;
 
+            @include for-wide-layout {
+                width: $medium-size;
+                height: $medium-size;
+
+                background-size: $medium-size $medium-size;
+            }
+
+            @include for-normal-layout {
+                width: $noraml-size;
+                height: $noraml-size;
+
+                background-size: $noraml-size $noraml-size;
+            }
+
+
             p {
                 word-wrap: break-word;
                 overflow: hidden;
                 text-align: center;
-                padding-top: 2.5rem;
+                padding-top: 6.5rem;
                 margin-block-start: 0em;
                 margin-block-end: 0em;
-                width: 190px;
-                height: 190px;
+                width: $size - 10;
+                height: $size - 10;
                 margin: 0;
                 direction: rtl;
+
+                @include for-wide-layout {
+                    padding-top: 5.5rem;
+                    width: $medium-size - 10;
+                    height: $medium-size - 10;
+                }
+                @include for-normal-layout {
+                    padding-top: 4.5rem;
+                    width: $noraml-size - 10;
+                    height: $noraml-size -10;
+                }
             }
         }
 
         .cube__face--front {
-            // background-color: rgb(255, 0, 0);
             background-image: url('../../styles/imgs/1.jpg');
-            // transform: rotateY(0deg) translate3D(0,0,100px);
             transform: translate3d(0, 0, $size/2);
 
+            @include for-wide-layout {
+                transform: translate3d(0, 0, $medium-size/2);
+            }
+
+            @include for-normal-layout {
+                transform: translate3d(0, 0, $noraml-size/2);
+            }
         }
+
         .cube__face--back {
-            // background-color: rgb(255, 255, 0);
             background-image: url('../../styles/imgs/3.png');
-            // transform: rotateY(180deg) translateZ(100px);
             transform: rotateY(180deg) translate3d(0, 0, $size/2);
+
+            @include for-wide-layout {
+                transform: rotateY(180deg) translate3d(0, 0, $medium-size/2);
+            }
+
+            @include for-normal-layout {
+                transform: rotateY(180deg) translate3d(0, 0, $noraml-size/2);
+            }
         }
 
         .cube__face--left {
-            // background-color: rgb(0, 128, 0);
             background-image: url('../../styles/imgs/4.png');
             transform: rotateY(-90deg) translate3d(0, 0, $size/2);
+
+            @include for-wide-layout {
+                transform: rotateY(-90deg) translate3d(0, 0, $medium-size/2);
+            }
+
+            @include for-normal-layout {
+                transform: rotateY(-90deg) translate3d(0, 0, $noraml-size/2);
+            }
         }
 
         .cube__face--right {
-            // background-color: rgb(0, 0, 255);
             background-image: url('../../styles/imgs/2.png');
-            // transform: rotateY(90deg) translateZ(100px);
             transform: rotateY(90deg) translate3d(0, 0, $size/2);
+
+            @include for-wide-layout {
+                transform: rotateY(90deg) translate3d(0, 0, $medium-size/2);
+            }
+
+            @include for-normal-layout {
+                transform: rotateY(90deg) translate3d(0, 0, $noraml-size/2);
+            }
         }
 
         .cube__face--top {
-            // background-color: rgb(0, 0, 0);
             background-image: url('../../styles/imgs/5.png');
             transform: rotateX(90deg) translate3d(0, 0, $size/2);
+
+            @include for-wide-layout {
+                transform: rotateX(90deg) translate3d(0, 0, $medium-size/2);
+            }
+
+            @include for-normal-layout {
+                transform: rotateX(90deg) translate3d(0, 0, $noraml-size/2);
+            }
         }
 
         .cube__face--bottom {
-            // background-color: rgb(255, 192, 203);
             background-image: url('../../styles/imgs/6.png');
             transform: rotateX(-90deg) translate3d(0, 0, $size/2);
+
+            @include for-wide-layout {
+                transform: rotateX(-90deg) translate3d(0, 0, $medium-size/2);
+            }
+
+            @include for-normal-layout {
+                transform: rotateX(-90deg) translate3d(0, 0, $noraml-size/2);
+            }
         }
     }
 }
