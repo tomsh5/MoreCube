@@ -66,7 +66,9 @@ $small-size: 150px;
         margin-left: 2.3rem;
 
         @include for-normal-layout {
+            width: 100%;
             margin: 2rem 0rem 3rem 1rem;
+            padding-left: 2rem;
         }
 
         label {
@@ -135,7 +137,7 @@ $small-size: 150px;
     }
 
     .cube-input {
-        width: 16rem;
+        width: 15rem;
         margin-bottom: 1rem;
         margin-top: 0;
     }

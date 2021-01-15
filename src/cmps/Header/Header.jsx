@@ -19,7 +19,7 @@ export function Header(props) {
                 <h2><i className="fas fa-cube"></i>MoreCube</h2>
             </div>
             <div>
-                <ul className="flex space-between">
+                <ul className="flex">
                     <li onClick={() => changeLang(lng)}>{lngBtn}</li>
                     <li onClick={() => onEditCube()}>{editBtn}</li>
                 </ul>
