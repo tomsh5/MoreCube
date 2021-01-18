@@ -2,10 +2,12 @@
     box-sizing: border-box;
 }
 
-
-
 @import '../../styles/setup/variables.scss';
 @import '../../styles/setup/mixins.scss';
+
+.moreCubeApp {
+    background: url('../../styles/imgs/9.png');
+}
 
 
 :root {
@@ -25,8 +27,26 @@ $small-size: 150px;
     }
 }
 
-.he{
+.he {
     direction: rtl;
+
+    .roll-cube-btn {
+        margin-right: 5rem;
+
+        @include for-normal-layout {
+            margin-right: 0rem;
+        }
+    }
+
+    .cube-container {
+        margin-left: 0rem;
+        margin-right: 6rem;
+
+        @include for-normal-layout {
+            margin-right: 0rem;
+        }
+
+    }
 
     .CubeEdit {
         margin-right: 2.3rem;
@@ -34,10 +54,11 @@ $small-size: 150px;
         .preview-btn {
             margin-right: 0.5rem;
             margin-left: 0;
-    }
+        }
     }
 }
-.en{
+
+.en {
     direction: ltr;
 }
 
@@ -69,8 +90,8 @@ $small-size: 150px;
             margin: 2rem 0rem 3rem 1rem;
         }
 
-        .edit-form{
-            width: 100%;
+        .edit-form {
+            width: 250px
         }
 
         label {
@@ -120,6 +141,7 @@ $small-size: 150px;
         display: flex;
         width: 32vw;
         justify-content: center;
+
         .roll-btn {
             display: inline-block;
             background-color: #dd114e;
@@ -149,7 +171,7 @@ $small-size: 150px;
         margin-left: 0.5rem;
         font-size: 12px;
         display: inline-block;
-        background-color: #e97f1b;
+        background-color: #db9898;
         color: rgb(255, 255, 255);
         padding: 0.1rem 0.2rem;
         border: 0.0px solid rgb(255, 255, 255);
@@ -160,7 +182,7 @@ $small-size: 150px;
     }
 
     .preview-btn:hover {
-        background-color: #dd720e
+        background-color: #d19090;
     }
 
     input {
@@ -234,7 +256,7 @@ $small-size: 150px;
             overflow-wrap: break-word;
             background-repeat: no-repeat;
             background-size: $size $size;
-            opacity: 0.95;
+            opacity: 0.98;
 
             @include for-wide-layout {
                 width: $medium-size;
@@ -268,6 +290,7 @@ $small-size: 150px;
                     width: $medium-size;
                     height: 230px;
                 }
+
                 @include for-normal-layout {
                     padding-top: 4.5rem;
                     width: $noraml-size - 10;
@@ -277,7 +300,7 @@ $small-size: 150px;
         }
 
         .cube__face--front {
-            background-image: url('../../styles/imgs/1.jpg');
+            background-image: url('../../styles/imgs/1.png');
             transform: translate3d(0, 0, $size/2);
 
             @include for-wide-layout {
@@ -357,19 +380,19 @@ $small-size: 150px;
 }
 
 .cube.show-front {
-    transform: translateZ(-100px) rotateX(12deg) rotateY(12deg)
+    transform: translateZ(-100px) rotateX(17deg) rotateY(0deg)
 }
 
 .cube.show-right {
-    transform: translateZ(-100px) rotateY(-80deg);
+    transform: translateZ(-100px) rotateY(-75deg);
 }
 
 .cube.show-back {
-    transform: translateZ(-100px) rotateY(-170deg);
+    transform: translateZ(-100px) rotateY(-180deg);
 }
 
 .cube.show-left {
-    transform: translateZ(-100px) rotateY(80deg);
+    transform: translateZ(-100px) rotateY(75deg);
 }
 
 .cube.show-top {
@@ -377,14 +400,14 @@ $small-size: 150px;
 }
 
 .cube.show-bottom {
-    transform: translateZ(-100px) rotateX(80deg);
+    transform: translateZ(-100px) rotateX(90deg);
 }
 
 .cube.show-diagnol {
-    transform: translateZ(-100px) rotateY(50deg) rotateX(20deg);
+    transform: translateZ(-100px) rotateY(-50deg) rotateX(-50deg);
 }
 
 .cube.show-roll {
-    transform: translateZ(-100px) rotateY(1000deg) rotateX(500deg);
+    transform: translateZ(-100px) rotateY(590deg) rotateX(720deg);
     ;
 }

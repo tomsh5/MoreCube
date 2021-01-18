@@ -5,12 +5,13 @@ import './Header.scss';
 export function Header(props) {
     const { onEditCube } = props;
     const { changeLang } = props;
-    const {lng} = props;
-    const {lngBtn} = props;
-    const {editBtn} = props;
+    const { lng } = props;
+    const { lngBtn } = props;
+    const { editBtn } = props;
+   
 
     useEffect(() => {
-        
+
     }, []);
 
     return (
@@ -22,7 +23,7 @@ export function Header(props) {
                 <ul className="flex">
                     <li onClick={() => changeLang(lng)}>{lngBtn}</li>
                     <li onClick={() => onEditCube()}>{editBtn}</li>
-                </ul>
+                    </ul>
             </div>
         </header>
 

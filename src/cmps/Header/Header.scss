@@ -1,35 +1,48 @@
 @import '../../styles/setup/variables.scss';
 @import '../../styles/setup/mixins.scss';
 
-header{
-    ul{
+header {
+    ul {
         list-style: none;
         margin: 0;
         margin-right: 1rem;
         padding: 0;
-        // @include for-normal-layout {
-        //     padding: 0;
-        // }
 
-        li{
+        @include for-normal-layout {
+            margin-right: 0.5rem;
+        }
+
+        li {
             font-weight: bold;
             margin-right: 1rem;
             cursor: pointer;
             font-size: 1.5rem;
+            transition: transform .8s;
+
+            &:hover {
+                color: white;
+            }
+
+            @include for-normal-layout {
+                margin-right: 0.5rem;
+            }
         }
     }
 
-    .fa-edit{
+    .fa-edit {
         font-size: 1.5rem;
     }
 
-    .fa-eye{
+    .fa-eye {
         font-size: 1.5rem;
         padding-top: 0.2rem;
     }
-    background-color: #dd114e;
+
+    background-color: rgb(221, 17, 78);
+
     color: rgb(22, 22, 22);
-    h2{
+
+    h2 {
         margin: 0;
         margin-left: 1rem;
 
@@ -38,12 +51,12 @@ header{
         }
     }
 
-    .cubeLogo{
+    .cubeLogo {
         margin-left: 1rem;
         padding: 1rem;
 
-        i{
-            margin-right: 0.3rem; 
+        i {
+            margin-right: 0.3rem;
         }
 
         @include for-normal-layout {
