@@ -28,10 +28,14 @@ export function CubeApp(props) {
   const [mobileMode, setMobileMode ] = useState(false);
   const refHook = useRef(false)
   const didMountRef = useRef(false)
-  const savedCube = storageService.load('cube')
+  
 
   useEffect(() => {
+    const savedCube = storageService.load('cube')
+
+    if (savedCube){
     setCube(savedCube)
+    }
   },[]);
 
 
