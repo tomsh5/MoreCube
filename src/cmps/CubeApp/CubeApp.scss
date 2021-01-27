@@ -10,6 +10,8 @@
 }
 
 
+
+
 :root {
     --size: 300px;
 }
@@ -102,6 +104,10 @@ $small-size: 150px;
             color: rgb(53, 51, 51)
         }
 
+        .bg-color,.txt-color{
+            display: block;
+        }
+
         .save-clear-btns {
             margin-top: 1rem;
             width: 7rem;
@@ -189,6 +195,7 @@ $small-size: 150px;
         height: 1.5rem;
         margin-right: 0.0rem;
         margin-top: 0.2rem;
+        margin-bottom: 0.5rem;
         outline: none;
         border: 0.5px solid rgb(221, 221, 221);
         border-radius: 0.3rem;
@@ -299,9 +306,14 @@ $small-size: 150px;
             }
         }
 
-        .cube__face--front {
-            background-image: url('../../styles/imgs/1.png');
+        .cube__face--front{
+            background-image: url('../../styles/imgs/front.png');
             transform: translate3d(0, 0, $size/2);
+
+            .remove-bgc-img{
+                background-color: white;
+                background-image: none;
+            }
 
             @include for-wide-layout {
                 transform: translate3d(0, 0, $medium-size/2);
@@ -313,7 +325,7 @@ $small-size: 150px;
         }
 
         .cube__face--back {
-            background-image: url('../../styles/imgs/3.png');
+            background-image: url('../../styles/imgs/back.png');
             transform: rotateY(180deg) translate3d(0, 0, $size/2);
 
             @include for-wide-layout {
@@ -326,7 +338,7 @@ $small-size: 150px;
         }
 
         .cube__face--left {
-            background-image: url('../../styles/imgs/4.png');
+            background-image: url('../../styles/imgs/left.png');
             transform: rotateY(-90deg) translate3d(0, 0, $size/2);
 
             @include for-wide-layout {
@@ -339,7 +351,7 @@ $small-size: 150px;
         }
 
         .cube__face--right {
-            background-image: url('../../styles/imgs/2.png');
+            background-image: url('../../styles/imgs/right.png');
             transform: rotateY(90deg) translate3d(0, 0, $size/2);
 
             @include for-wide-layout {
@@ -352,7 +364,7 @@ $small-size: 150px;
         }
 
         .cube__face--top {
-            background-image: url('../../styles/imgs/5.png');
+            background-image: url('../../styles/imgs/top.png');
             transform: rotateX(90deg) translate3d(0, 0, $size/2);
 
             @include for-wide-layout {
@@ -365,9 +377,9 @@ $small-size: 150px;
         }
 
         .cube__face--bottom {
-            background-image: url('../../styles/imgs/6.png');
+            background-image: url('../../styles/imgs/bottom.png');
             transform: rotateX(-90deg) translate3d(0, 0, $size/2);
-
+            background-color: transparent;
             @include for-wide-layout {
                 transform: rotateX(-90deg) translate3d(0, 0, $medium-size/2);
             }
@@ -411,3 +423,4 @@ $small-size: 150px;
     transform: translateZ(-100px) rotateY(590deg) rotateX(720deg);
     ;
 }
+

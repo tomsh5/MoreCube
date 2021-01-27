@@ -11,6 +11,7 @@ import {
     TwitterIcon,
     LinkedinIcon,
     WhatsappIcon,
+    FacebookShareCount
 } from "react-share";
 
 export function SubShare() {
@@ -19,72 +20,72 @@ export function SubShare() {
     const [size] = useState('1.5rem')
 
     return (
-            <ul className="SubShare flex">
-                <li
-                    className="network"
+        <ul className="SubShare flex">
+            <li
+                className="network"
+            >
+                <FacebookShareButton
+                    className="network__share-button"
+                    url={url}
+                    quote={title}
                 >
-                    <FacebookShareButton
-                        className="network__share-button"
-                        url={url}
-                        quote={title}
-                    >
-                        <FacebookIcon
-                            size={size}
-                        />
-                    </FacebookShareButton>
-                </li>
-                <li
-                    className="network"
+                    <FacebookIcon
+                        size={size}
+                    />
+                </FacebookShareButton>
+            </li>
+            <li
+                className="network"
+            >
+                <EmailShareButton
+                    className="network__share-button"
+                    url={url}
+                    quote={title}
                 >
-                    <EmailShareButton
-                        className="network__share-button"
-                        url={url}
-                        quote={title}
-                    >
-                        <EmailIcon
-                            size={size}
-                        />
-                    </EmailShareButton>
-                </li>
-                <li
-                    className="network"
+                    <EmailIcon
+                        size={size}
+                    />
+                </EmailShareButton>
+            </li>
+            <li
+                className="network"
+            >
+                <TwitterShareButton
+                    className="network__share-button"
+                    url={url}
+                    quote={title}
                 >
-                    <TwitterShareButton
-                        className="network__share-button"
-                        url={url}
-                        quote={title}
-                    >
-                        <TwitterIcon
-                            size={size}
-                        />
-                    </TwitterShareButton>
-                </li>
-                <li
-                    className="network"
+                    <TwitterIcon
+                        size={size}
+                    />
+                </TwitterShareButton>
+            </li>
+            <li
+                className="network"
+            >
+                <LinkedinShareButton
+                    className="network__share-button"
+                    url={url}
+                    quote={title}
                 >
-                    <LinkedinShareButton
-                        className="network__share-button"
-                        url={url}
-                        quote={title}
-                    >
-                        <LinkedinIcon
-                            size={size}
-                        />
-                    </LinkedinShareButton>
-                </li>
-                <li
-                    className="network"
+                    <LinkedinIcon
+                        size={size}
+                    />
+                </LinkedinShareButton>
+            </li>
+            <li
+                className="network"
+            >
+                <WhatsappShareButton
+                    className="network__share-button"
+                    url={url}
+                    quote={title}
                 >
-                    <WhatsappShareButton
-                        className="network__share-button"
-                        url={url}
-                        quote={title}
-                    >
-                        <WhatsappIcon
-                            size={size}
-                        />
-                    </WhatsappShareButton>
-                </li>
-            </ul>
+                    <WhatsappIcon
+                        size={size}
+                    />
+                </WhatsappShareButton>
+            </li>
+        </ul>
     )
 }

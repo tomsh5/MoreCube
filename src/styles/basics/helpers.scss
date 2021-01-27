@@ -1,5 +1,10 @@
 /* helpers */
 
+.remove-bgc-img{
+    background-color: white;
+    background-image: none;
+}
+
 .flex {
     display: flex;
 }
@@ -49,4 +54,8 @@
 
 .justify-self{
     justify-self: center;
+}
+
+.gap-1rem{
+    gap: 1rem;
 }

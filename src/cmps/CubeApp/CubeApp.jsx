@@ -1,14 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './CubeApp.scss';
+import '../../styles/imgs/front.png';
 import storageService from '../../services/storageService'
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
 import { SubShare } from '../SubShare/SubShare'
 import { useSnackbar } from 'notistack';
 import * as Scroll from 'react-scroll';
-import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
-
+import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import ReactGA from 'react-ga';
+ReactGA.initialize('G-JNQV85C1EF');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 
 export function CubeApp(props) {
@@ -28,11 +31,19 @@ export function CubeApp(props) {
   const [mobileMode, setMobileMode ] = useState(false);
   const refHook = useRef(false)
   const didMountRef = useRef(false)
+  const [bgImg, setBgImg] = useState('')
+  const img = 
+  {front: 'https://i.imgur.com/dNTEeO0.png',
+  back: 'https://i.imgur.com/L1TAoDO.png',
+  right: 'https://i.imgur.com/AWxnRbc.png',
+  left: 'https://i.imgur.com/TezWM59.png',
+  top: 'https://i.imgur.com/XfdVmpG.png',
+  bottom: 'https://i.imgur.com/40V7aTC.png'
+}
   
 
   useEffect(() => {
     const savedCube = storageService.load('cube')
-
     if (savedCube){
     setCube(savedCube)
     }
@@ -120,9 +131,53 @@ export function CubeApp(props) {
     });
   }
 
+  function getSideImg (side){
+    switch (side) {
+      case 'front':
+        return img.front;
+      case 'back':
+        return img.back;
+      case 'right':
+        return img.right;
+      case 'left':
+        return img.left;
+      case 'top':
+        return img.top;
+      case 'bottom':
+        return img.bottom;
+      default:
+        break;
+    }
+  }
+
   const handleSubmit = event => {
     event.preventDefault();
   };
+  const onBgColorChange = ({target} ,side) => {
+     console.log(target.id, side);
+    // setBgImg('-remove-bgc-img')
+    const cubeSide = document.querySelector(`.cube__face--${side}`)
+
+    if (target.id === 'bg-color'){
+      cubeSide.style.backgroundColor = target.value;
+      cubeSide.style.backgroundImage = 'none';
+    }
+    else{
+      cubeSide.style.color = target.value;
+    }
+  };
+
+  function onDefaultBackground(side){
+    
+    const cubeCurrSide = document.querySelector(`.cube__face--${side}`)
+    const currImg = getSideImg (side)
+    cubeCurrSide.style.backgroundImage = `url(${currImg})`;
+  }
+
+  function onDefaultTxt(side) {
+    const cubeCurrSide = document.querySelector(`.cube__face--${side}`)
+    cubeCurrSide.style.color = 'white';
+  }
 
   function changeLang(appLng) {
     if (appLng === 'he') {
@@ -154,6 +209,16 @@ export function CubeApp(props) {
               <div className="cube-input">
                 <input name="front" type="text" maxLength="36" onChange={handleChange} placeholder={t('type.title')} />
                 <button className="preview-btn" onClick={() => onPreview('front')}>{t('preview.title')}</button>
+                <div className="color-pickers flex column">
+                <div className="flex gap-1rem">
+                <span>Background</span> <input className="bg-color" type="color" id="bg-color" onChange={(e) => onBgColorChange(e,'front')}/>
+                <button onClick={() => onDefaultBackground('front')}>Default</button>
+                </div>
+                <div className="flex gap-1rem">
+                <span>Text</span><input className="txt-color" type="color" id="txt-color" onChange={(e) => onBgColorChange(e,'front')}/>
+                <button onClick={() => onDefaultTxt('front')}>Default</button>
+                </div>
+                </div>
               </div>
               <label>{t('sides.back')}</label>
               <div className="cube-input">
@@ -192,7 +257,7 @@ export function CubeApp(props) {
           <div className="cube-container">
             <div className="scene">
               <div className={`cube show-${cubeSide}`}>
-                <div className="cube__face cube__face--front"><p>{cube.front}</p> </div>
+                <div className={`cube__face cube__face--front`}><p>{cube.front}</p> </div>
                 <div className="cube__face cube__face--back"><p>{cube.back}</p></div>
                 <div className="cube__face cube__face--right"><p>{cube.right}</p></div>
                 <div className="cube__face cube__face--left"><p>{cube.left}</p></div>
