@@ -307,7 +307,7 @@ $small-size: 150px;
         }
 
         .cube__face--front{
-            background-image: url('https://i.imgur.com/dNTEeO0.png');
+            background-image: url('../../styles/imgs/front.png');
             transform: translate3d(0, 0, $size/2);
 
             .remove-bgc-img{
@@ -325,7 +325,7 @@ $small-size: 150px;
         }
 
         .cube__face--back {
-            background-image: url('https://i.imgur.com/L1TAoDO.png');
+            background-image: url('../../styles/imgs/back.png');
             transform: rotateY(180deg) translate3d(0, 0, $size/2);
 
             @include for-wide-layout {
@@ -338,7 +338,7 @@ $small-size: 150px;
         }
 
         .cube__face--left {
-            background-image: url('https://i.imgur.com/TezWM59.png');
+            background-image: url('../../styles/imgs/left.png');
             transform: rotateY(-90deg) translate3d(0, 0, $size/2);
 
             @include for-wide-layout {
@@ -351,7 +351,7 @@ $small-size: 150px;
         }
 
         .cube__face--right {
-            background-image: url('https://i.imgur.com/AWxnRbc.png');
+            background-image: url('../../styles/imgs/right.png');
             transform: rotateY(90deg) translate3d(0, 0, $size/2);
 
             @include for-wide-layout {
@@ -364,7 +364,7 @@ $small-size: 150px;
         }
 
         .cube__face--top {
-            background-image: url('https://i.imgur.com/XfdVmpG.png');
+            background-image: url('../../styles/imgs/top.png');
             transform: rotateX(90deg) translate3d(0, 0, $size/2);
 
             @include for-wide-layout {
@@ -377,7 +377,7 @@ $small-size: 150px;
         }
 
         .cube__face--bottom {
-            background-image: url('https://i.imgur.com/40V7aTC.png');
+            background-image: url('../../styles/imgs/bottom.png');
             transform: rotateX(-90deg) translate3d(0, 0, $size/2);
             background-color: transparent;
             @include for-wide-layout {

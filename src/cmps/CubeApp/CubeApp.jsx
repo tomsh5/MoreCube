@@ -9,9 +9,6 @@ import { SubShare } from '../SubShare/SubShare'
 import { useSnackbar } from 'notistack';
 import * as Scroll from 'react-scroll';
 import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
-import ReactGA from 'react-ga';
-ReactGA.initialize('G-JNQV85C1EF');
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 
 export function CubeApp(props) {
