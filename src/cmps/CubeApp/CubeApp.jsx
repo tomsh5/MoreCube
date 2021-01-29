@@ -23,28 +23,71 @@ export function CubeApp(props) {
     front: 'front', back: 'back', right: 'right',
     left: 'left', top: 'top', bottom: 'bottom'
   });
+  const [cubeBgColors, setCubeBgColors] = useState(null)
+  const [cubeTxtColors, setCubeTxtColors] = useState(null)
   const [editBtn, seteEditBtn] = useState(<i className="far fa-eye"></i>);
   const pageWidth = window.innerWidth;
-  const [mobileMode, setMobileMode ] = useState(false);
-  const refHook = useRef(false)
-  const didMountRef = useRef(false)
-  const [bgImg, setBgImg] = useState('')
-  const img = 
-  {front: 'https://i.imgur.com/dNTEeO0.png',
-  back: 'https://i.imgur.com/L1TAoDO.png',
-  right: 'https://i.imgur.com/AWxnRbc.png',
-  left: 'https://i.imgur.com/TezWM59.png',
-  top: 'https://i.imgur.com/XfdVmpG.png',
-  bottom: 'https://i.imgur.com/40V7aTC.png'
-}
-  
+  const [cubeTxtLoaded, setCubeTxtLoaded] = useState(false);
+  const [cubeBgColorLoaded, setCubeBgColorLoaded] = useState(false);
+  const [cubeTxtColorLoaded, setCubeTxtColorLoaded] = useState(false);
+  const img =
+  {
+    front: 'https://i.imgur.com/dNTEeO0.png',
+    back: 'https://i.imgur.com/L1TAoDO.png',
+    right: 'https://i.imgur.com/AWxnRbc.png',
+    left: 'https://i.imgur.com/TezWM59.png',
+    top: 'https://i.imgur.com/XfdVmpG.png',
+    bottom: 'https://i.imgur.com/40V7aTC.png'
+  }
+
 
   useEffect(() => {
-    const savedCube = storageService.load('cube')
-    if (savedCube){
-    setCube(savedCube)
+
+
+    if (!cubeTxtLoaded) {
+      const savedCube = storageService.load('cube')
+      setCube(savedCube)
+      setCubeTxtLoaded(true)
     }
-  },[]);
+
+    if (!cubeBgColorLoaded) {
+      const savedBgColors = storageService.load('cubeBgColors');
+      setCubeBgColors(savedBgColors)
+      loadCubeBgColors()
+    }
+    if (!cubeTxtColorLoaded) {
+      const savedTxtColors = storageService.load('cubeTxtColors');
+      setCubeTxtColors(savedTxtColors)
+      loadCubeTxtColors()
+    }
+
+  });
+
+  function loadCubeBgColors() {
+    if (cubeBgColors) {
+      Object.entries(cubeBgColors).forEach(([key, value]) => {
+        const cubeSideEl = document.querySelector(`.cube__face--${key}`)
+        if (value) {
+          cubeSideEl.style.backgroundColor = value;
+          cubeSideEl.style.backgroundImage = 'none';
+          setCubeBgColorLoaded(true)
+        }
+      });
+    }
+  }
+
+
+  function loadCubeTxtColors() {
+    if (cubeTxtColors) {
+      Object.entries(cubeTxtColors).forEach(([key, value]) => {
+        const cubeSideEl = document.querySelector(`.cube__face--${key}`)
+        if (value) {
+          cubeSideEl.style.color = value;
+          setCubeTxtColorLoaded(true)
+        }
+      });
+    }
+  }
 
 
   function rollCube() {
@@ -69,6 +112,11 @@ export function CubeApp(props) {
     }
   }
 
+  function onColorsEdit(side) {
+    const cubeCurrSide = document.querySelector(`.color-edit-${side}`)
+    cubeCurrSide.classList.toggle('show-color-edit')
+  }
+
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -80,6 +128,21 @@ export function CubeApp(props) {
     const field = target.name
     const value = target.type === 'number' ? +target.value : target.value
     setCube({ ...cube, [field]: value })
+  }
+
+  function handleColorChange({ target }) {
+    const field = target.name
+    const value = target.type === 'number' ? +target.value : target.value
+    console.log(target.id);
+
+    if (target.id === 'bg-color') {
+      setCubeBgColors({ ...cubeBgColors, [field]: value })
+      console.log(cubeBgColors);
+    }
+    else {
+      setCubeTxtColors({ ...cubeTxtColors, [field]: value })
+      console.log(cubeTxtColors);
+    }
   }
 
   function getRandomSide(num) {
@@ -103,6 +166,9 @@ export function CubeApp(props) {
 
   async function saveCube(cube) {
     await storageService.post(`cube`, cube);
+    await storageService.post(`cubeBgColors`, cubeBgColors);
+    await storageService.post(`cubeTxtColors`, cubeTxtColors);
+
     enqueueSnackbar(t("msg.save"), {
       anchorOrigin: {
         vertical: 'top',
@@ -117,6 +183,7 @@ export function CubeApp(props) {
       front: '', back: '', right: '',
       left: '', top: '', bottom: ''
     })
+
     document.getElementById("edit-form").reset();
     enqueueSnackbar(t("msg.clear"), {
       anchorOrigin: {
@@ -128,7 +195,7 @@ export function CubeApp(props) {
     });
   }
 
-  function getSideImg (side){
+  function getSideImg(side) {
     switch (side) {
       case 'front':
         return img.front;
@@ -150,24 +217,27 @@ export function CubeApp(props) {
   const handleSubmit = event => {
     event.preventDefault();
   };
-  const onBgColorChange = ({target} ,side) => {
-     console.log(target.id, side);
-    // setBgImg('-remove-bgc-img')
+  const onColorChange = ({ target }) => {
+    const side = target.name;
     const cubeSide = document.querySelector(`.cube__face--${side}`)
 
-    if (target.id === 'bg-color'){
+
+    if (target.id === 'bg-color') {
       cubeSide.style.backgroundColor = target.value;
       cubeSide.style.backgroundImage = 'none';
+      handleColorChange({ target })
+      console.log(cubeBgColors);
     }
-    else{
+    else {
       cubeSide.style.color = target.value;
+      handleColorChange({ target })
     }
   };
 
-  function onDefaultBackground(side){
-    
+  function onDefaultBackground(side) {
+
     const cubeCurrSide = document.querySelector(`.cube__face--${side}`)
-    const currImg = getSideImg (side)
+    const currImg = getSideImg(side)
     cubeCurrSide.style.backgroundImage = `url(${currImg})`;
   }
 
@@ -191,56 +261,140 @@ export function CubeApp(props) {
 
   function onPreview(side) {
     setCubeSide(side)
-    scroll.scrollToTop();
+
+    if (pageWidth < 850) {
+      scroll.scrollToTop();
+    }
   }
 
   return (
     <div className="moreCubeApp">
       <Header editBtn={editBtn} onEditCube={onEditCube} changeLang={changeLang} lng={lng} lngBtn={lngBtn} />
-      {pageWidth > 850 && <SubShare/>}
+      {pageWidth > 850 && <SubShare />}
       <div className="container">
         <section className={`cube-app ${lng}`}>
           <div className={`CubeEdit ${hidden}`}>
             <form className="edit-form" id="edit-form" onSubmit={handleSubmit} >
               <label>{t('sides.front')}</label>
-              <div className="cube-input">
-                <input name="front" type="text" maxLength="36" onChange={handleChange} placeholder={t('type.title')} />
-                <button className="preview-btn" onClick={() => onPreview('front')}>{t('preview.title')}</button>
-                <div className="color-pickers flex column">
-                <div className="flex gap-1rem">
-                <span>Background</span> <input className="bg-color" type="color" id="bg-color" onChange={(e) => onBgColorChange(e,'front')}/>
-                <button onClick={() => onDefaultBackground('front')}>Default</button>
+              <div className="edit-container">
+                <div className="flex align-center">
+                  <input className="text-input" name="front" type="text" maxLength="36" onChange={handleChange} placeholder={t('type.title')} />
+                  <button className="color-btn" onClick={() => onColorsEdit('front')}><i className="fas fa-palette"></i></button>
+                  <button className="preview-btn" onClick={() => onPreview('front')}>{t('preview.title')}</button>
                 </div>
-                <div className="flex gap-1rem">
-                <span>Text</span><input className="txt-color" type="color" id="txt-color" onChange={(e) => onBgColorChange(e,'front')}/>
-                <button onClick={() => onDefaultTxt('front')}>Default</button>
-                </div>
+                <div className={`color-pickers flex gap-1-5rem`}>
+                  <div className="color-edit-front">
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('background.title')}</span> <input name="front" className="bg-color" type="color" id="bg-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultBackground('front')}>{t('default.title')}</button>
+                    </div>
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('text.title')}</span><input name="front" className="txt-color" type="color" id="txt-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultTxt('front')}>{t('default.title')}</button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <label>{t('sides.back')}</label>
-              <div className="cube-input">
-                <input name="back" type="text" onChange={handleChange} placeholder={t('type.title')} />
-                <button className="preview-btn" onClick={() => onPreview('back')}>{t('preview.title')}</button>
+              <div className="edit-container">
+                <div className="edit-btns flex align-center">
+                  <input className="text-input" name="back" type="text" onChange={handleChange} placeholder={t('type.title')} />
+                  <button className="color-btn" onClick={() => onColorsEdit('back')}><i className="fas fa-palette"></i></button>
+                  <button className="preview-btn" onClick={() => onPreview('back')}>{t('preview.title')}</button>
+                </div>
+                <div className={`color-pickers flex gap-1-5rem`}>
+                  <div className="color-edit-back">
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('background.title')}</span> <input name="back" className="bg-color" type="color" id="bg-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultBackground('back')}>{t('default.title')}</button>
+                    </div>
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('text.title')}</span><input name="back" className="txt-color" type="color" id="txt-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultTxt('back')}>{t('default.title')}</button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <label>{t('sides.right')}</label>
-              <div className="cube-input">
-                <input name="right" type="text" onChange={handleChange} placeholder={t('type.title')} />
-                <button className="preview-btn" onClick={() => onPreview('right')}>{t('preview.title')}</button>
+              <div className="edit-container">
+                <div className="edit-btns flex align-center">
+                  <input className="text-input" name="right" type="text" onChange={handleChange} placeholder={t('type.title')} />
+                  <button className="color-btn" onClick={() => onColorsEdit('right')}><i className="fas fa-palette"></i></button>
+                  <button className="preview-btn" onClick={() => onPreview('right')}>{t('preview.title')}</button>
+                </div>
+                <div className="color-pickers flex gap-1rem">
+                  <div className="color-edit-right">
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('background.title')}</span> <input name="right" className="bg-color" type="color" id="bg-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultBackground('right')}>{t('default.title')}</button>
+                    </div>
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('text.title')}</span><input name="right" className="txt-color" type="color" id="txt-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultTxt('right')}>{t('default.title')}</button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <label>{t('sides.left')}</label>
-              <div className="cube-input">
-                <input name="left" type="text" onChange={handleChange} placeholder={t('type.title')} />
-                <button className="preview-btn" onClick={() => onPreview('left')}>{t('preview.title')}</button>
+              <div className="edit-container">
+                <div className="edit-btns flex align-center">
+                  <input className="text-input" name="left" type="text" onChange={handleChange} placeholder={t('type.title')} />
+                  <button className="color-btn" onClick={() => onColorsEdit('left')}><i className="fas fa-palette"></i></button>
+                  <button className="preview-btn" onClick={() => onPreview('left')}>{t('preview.title')}</button>
+                </div>
+                <div className="color-pickers flex gap-1rem">
+                  <div className="color-edit-left">
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('background.title')}</span> <input name="left" className="bg-color" type="color" id="bg-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultBackground('left')}>{t('default.title')}</button>
+                    </div>
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('text.title')}</span><input name="left" className="txt-color" type="color" id="txt-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultTxt('left')}>{t('default.title')}</button>
+                    </div>
+                  </div>
+                </div>
+
               </div>
               <label>{t('sides.top')}</label>
-              <div className="cube-input">
-                <input name="top" type="text" onChange={handleChange} placeholder={t('type.title')} />
-                <button className="preview-btn" onClick={() => onPreview('top')}>{t('preview.title')}</button>
+              <div className="edit-container">
+                <div className="edit-btns flex align-center">
+                  <input className="text-input" name="top" type="text" onChange={handleChange} placeholder={t('type.title')} />
+                  <button className="color-btn" onClick={() => onColorsEdit('top')}><i className="fas fa-palette"></i></button>
+                  <button className="preview-btn" onClick={() => onPreview('top')}>{t('preview.title')}</button>
+                </div>
+                <div className="color-pickers flex gap-1rem">
+                  <div className="color-edit-top">
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('background.title')}</span> <input name="top" className="bg-color" type="color" id="bg-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultBackground('top')}>{t('default.title')}</button>
+                    </div>
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('text.title')}</span><input name="top" className="txt-color" type="color" id="txt-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultTxt('top')}>{t('default.title')}</button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <label>{t('sides.bottom')}</label>
-              <div className="cube-input">
-                <input name="bottom" type="text" onChange={handleChange} placeholder={t('type.title')} />
-                <button className="preview-btn" onClick={() => onPreview('bottom')}>{t('preview.title')}</button>
+              <div className="edit-container">
+                <div className="edit-btns flex align-center">
+                  <input className="text-input" name="bottom" type="text" onChange={handleChange} placeholder={t('type.title')} />
+                  <button className="color-btn" onClick={() => onColorsEdit('bottom')}><i className="fas fa-palette"></i></button>
+                  <button className="preview-btn" onClick={() => onPreview('bottom')}>{t('preview.title')}</button>
+                </div>
+                <div className="color-pickers flex gap-1rem">
+                  <div className="color-edit-bottom">
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('background.title')}</span> <input name="bottom" className="bg-color" type="color" id="bg-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultBackground('bottom')}>{t('default.title')}</button>
+                    </div>
+                    <div className="flex gap-02-rem align-center">
+                      <span>{t('text.title')}</span><input name="bottom" className="txt-color" type="color" id="txt-color" onChange={onColorChange} />
+                      <button onClick={() => onDefaultTxt('bottom')}>{t('default.title')}</button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="save-clear-btns">
                 <button className="clear-btn" onClick={() => clearCube()}><i className="far fa-trash-alt"></i></button>
@@ -265,7 +419,7 @@ export function CubeApp(props) {
           </div>
         </section>
       </div>
-      {pageWidth < 850 && <SubShare/>}
+      {pageWidth < 850 && <SubShare />}
       <Footer />
     </div>
   );

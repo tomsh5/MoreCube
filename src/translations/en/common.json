@@ -15,5 +15,8 @@
     "msg":{
         "save": "The cube was saved successfuly",
         "clear": "The cube was cleard"
-    }
+    },
+    "default": {"title": "Default"},
+    "background": {"title": "background"},
+    "text": {"title": "text"}
 }
