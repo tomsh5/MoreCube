@@ -46,19 +46,25 @@ export function CubeApp(props) {
 
     if (!cubeTxtLoaded) {
       const savedCube = storageService.load('cube')
-      setCube(savedCube)
+      if (savedCube) {
+        setCube(savedCube)
+      }
       setCubeTxtLoaded(true)
     }
 
     if (!cubeBgColorLoaded) {
       const savedBgColors = storageService.load('cubeBgColors');
-      setCubeBgColors(savedBgColors)
-      loadCubeBgColors()
+      if (savedBgColors) {
+        setCubeBgColors(savedBgColors)
+        loadCubeBgColors()
+      }
     }
     if (!cubeTxtColorLoaded) {
       const savedTxtColors = storageService.load('cubeTxtColors');
-      setCubeTxtColors(savedTxtColors)
-      loadCubeTxtColors()
+      if (savedTxtColors) {
+        setCubeTxtColors(savedTxtColors)
+        loadCubeTxtColors()
+      }
     }
 
   });
