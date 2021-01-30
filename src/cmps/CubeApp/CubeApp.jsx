@@ -20,9 +20,10 @@ export function CubeApp(props) {
   const [prevNum, setPrevNum] = useState(0)
   const [hidden, setHidden] = useState('')
   const [cube, setCube] = useState({
-    front: 'front', back: 'back', right: 'right',
-    left: 'left', top: 'top', bottom: 'bottom'
+    front: '', back: '', right: '',
+    left: '', top: '', bottom: ''
   });
+  
   const [cubeBgColors, setCubeBgColors] = useState(null)
   const [cubeTxtColors, setCubeTxtColors] = useState(null)
   const [editBtn, seteEditBtn] = useState(<i className="far fa-eye"></i>);
@@ -283,9 +284,9 @@ export function CubeApp(props) {
             <form className="edit-form" id="edit-form" onSubmit={handleSubmit} >
               <label>{t('sides.front')}</label>
               <div className="edit-container">
-                <div className="flex align-center">
+                <div className="flex gap-05-rem align-center">
                   <input className="text-input" name="front" type="text" maxLength="36" onChange={handleChange} placeholder={t('type.title')} />
-                  <button className="color-btn" onClick={() => onColorsEdit('front')}><i className="fas fa-palette"></i></button>
+                  <i onClick={() => onColorsEdit('front')} className="fas fa-palette"></i>
                   <button className="preview-btn" onClick={() => onPreview('front')}>{t('preview.title')}</button>
                 </div>
                 <div className={`color-pickers flex gap-1-5rem`}>
@@ -303,9 +304,9 @@ export function CubeApp(props) {
               </div>
               <label>{t('sides.back')}</label>
               <div className="edit-container">
-                <div className="edit-btns flex align-center">
+                <div className="edit-btns flex gap-05-rem align-center">
                   <input className="text-input" name="back" type="text" onChange={handleChange} placeholder={t('type.title')} />
-                  <button className="color-btn" onClick={() => onColorsEdit('back')}><i className="fas fa-palette"></i></button>
+                  <i onClick={() => onColorsEdit('back')} className="fas fa-palette"></i>
                   <button className="preview-btn" onClick={() => onPreview('back')}>{t('preview.title')}</button>
                 </div>
                 <div className={`color-pickers flex gap-1-5rem`}>
@@ -323,9 +324,9 @@ export function CubeApp(props) {
               </div>
               <label>{t('sides.right')}</label>
               <div className="edit-container">
-                <div className="edit-btns flex align-center">
+                <div className="edit-btns flex gap-05-rem align-center">
                   <input className="text-input" name="right" type="text" onChange={handleChange} placeholder={t('type.title')} />
-                  <button className="color-btn" onClick={() => onColorsEdit('right')}><i className="fas fa-palette"></i></button>
+                  <i onClick={() => onColorsEdit('right')} className="fas fa-palette"></i>
                   <button className="preview-btn" onClick={() => onPreview('right')}>{t('preview.title')}</button>
                 </div>
                 <div className="color-pickers flex gap-1rem">
@@ -343,9 +344,9 @@ export function CubeApp(props) {
               </div>
               <label>{t('sides.left')}</label>
               <div className="edit-container">
-                <div className="edit-btns flex align-center">
+                <div className="edit-btns flex gap-05-rem align-center">
                   <input className="text-input" name="left" type="text" onChange={handleChange} placeholder={t('type.title')} />
-                  <button className="color-btn" onClick={() => onColorsEdit('left')}><i className="fas fa-palette"></i></button>
+                  <i onClick={() => onColorsEdit('left')} className="fas fa-palette"></i>
                   <button className="preview-btn" onClick={() => onPreview('left')}>{t('preview.title')}</button>
                 </div>
                 <div className="color-pickers flex gap-1rem">
@@ -364,9 +365,9 @@ export function CubeApp(props) {
               </div>
               <label>{t('sides.top')}</label>
               <div className="edit-container">
-                <div className="edit-btns flex align-center">
+                <div className="edit-btns flex gap-05-rem align-center">
                   <input className="text-input" name="top" type="text" onChange={handleChange} placeholder={t('type.title')} />
-                  <button className="color-btn" onClick={() => onColorsEdit('top')}><i className="fas fa-palette"></i></button>
+                  <i onClick={() => onColorsEdit('top')} className="fas fa-palette"></i>
                   <button className="preview-btn" onClick={() => onPreview('top')}>{t('preview.title')}</button>
                 </div>
                 <div className="color-pickers flex gap-1rem">
@@ -384,9 +385,9 @@ export function CubeApp(props) {
               </div>
               <label>{t('sides.bottom')}</label>
               <div className="edit-container">
-                <div className="edit-btns flex align-center">
+                <div className="edit-btns flex gap-05-rem align-center">
                   <input className="text-input" name="bottom" type="text" onChange={handleChange} placeholder={t('type.title')} />
-                  <button className="color-btn" onClick={() => onColorsEdit('bottom')}><i className="fas fa-palette"></i></button>
+                  <i onClick={() => onColorsEdit('bottom')} className="fas fa-palette"></i>
                   <button className="preview-btn" onClick={() => onPreview('bottom')}>{t('preview.title')}</button>
                 </div>
                 <div className="color-pickers flex gap-1rem">

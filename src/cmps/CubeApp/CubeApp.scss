@@ -168,7 +168,7 @@ $small-size: 150px;
     }
 
     .preview-btn {
-        margin-left: 0.5rem;
+        // margin-left: 0.5rem;
         font-size: 12px;
         display: inline-block;
         background-color: #db9898;
@@ -184,22 +184,25 @@ $small-size: 150px;
         background-color: #d19090;
     }
 
-    .color-btn {
-        width: 2rem;
-        height: 1.5rem;
-        border: none;
-        margin-left: 0.2rem;
-        font-size: 1rem;
-        text-align: center;
-        padding: 0;
-        border-radius: 0.3rem;
-        background-color: rgb(196, 181, 181);
-        color: white;
+    // .color-btn {
+    //     width: 2rem;
+    //     height: 1.5rem;
+    //     border: none;
+    //     font-size: 1rem;
+    //     text-align: center;
+    //     padding: 0;
+    //     border-radius: 0.3rem;
+    //     background-color: white;
+    //     // color: white;
+    // }
+
+    .fa-palette{
+        cursor: pointer;
     }
 
     .text-input {
         height: 1.5rem;
-        margin-right: 0.3rem;
+        margin-right: 0rem;
         outline: none;
         border: 0.5px solid rgb(221, 221, 221);
         border-radius: 0.3rem;
@@ -212,14 +215,9 @@ $small-size: 150px;
 
     .color-pickers {
         font-size: 0.8rem;
+        margin-top: 0.5rem;
 
-        button {
-            font-size: 0.8rem;
-            border: none;
-            background-color: rgb(196, 181, 181);
-            color: white;
-        }
-
+    
         .bg-color,
         .txt-color {
             width: 1.5rem;
@@ -476,14 +474,13 @@ $small-size: 150px;
 
             .text-input {
                 width: 12.4rem;
-
+                
                 @include for-normal-layout {
                     width: 9.4rem;
                 }
             }
 
             .preview-btn {
-                margin-right: 0.5rem;
                 margin-left: 0;
             }
 
@@ -498,6 +495,7 @@ $small-size: 150px;
 
                     .text-input {
                         width: 9rem;
+                        // margin-right: 1rem;
                     }
                 }
             }
