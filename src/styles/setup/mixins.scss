@@ -22,6 +22,11 @@
       @content;
     }
   }
+  @mixin for-very-wide-layout {
+    @media (min-width: $break-very-wide) {
+      @content;
+    }
+  }
   
   
   /* Media  Mixins */

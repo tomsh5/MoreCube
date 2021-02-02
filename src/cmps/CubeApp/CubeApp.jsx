@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './CubeApp.scss';
 import '../../styles/imgs/front.png';
@@ -7,8 +7,8 @@ import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
 import { SubShare } from '../SubShare/SubShare'
 import { useSnackbar } from 'notistack';
-import * as Scroll from 'react-scroll';
 import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import utileService from '../../services/utilService'
 
 
 export function CubeApp(props) {
@@ -98,12 +98,12 @@ export function CubeApp(props) {
 
 
   function rollCube() {
-    let randomNum = getRandomInt(1, 7)
+    let randomNum = utileService.getRandomInt(1, 7)
 
     while (randomNum === prevNum) {
-      randomNum = getRandomInt(1, 7)
+      randomNum = utileService.getRandomInt(1, 7)
     }
-    let randomSide = getRandomSide(randomNum)
+    let randomSide = utileService.getRandomSide(randomNum)
     setCubeSide('roll')
 
     setTimeout(function () { setCubeSide(randomSide) }, 2000);
@@ -124,13 +124,6 @@ export function CubeApp(props) {
     cubeCurrSide.classList.toggle('show-color-edit')
   }
 
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    const num = Math.floor(Math.random() * (max - min) + min);
-    return num
-  }
-
   function handleChange({ target }) {
     const field = target.name
     const value = target.type === 'number' ? +target.value : target.value
@@ -149,25 +142,6 @@ export function CubeApp(props) {
     else {
       setCubeTxtColors({ ...cubeTxtColors, [field]: value })
       console.log(cubeTxtColors);
-    }
-  }
-
-  function getRandomSide(num) {
-    switch (num) {
-      case 1:
-        return 'front';
-      case 2:
-        return 'back';
-      case 3:
-        return 'right';
-      case 4:
-        return 'left';
-      case 5:
-        return 'top';
-      case 6:
-        return 'bottom';
-      default:
-        break;
     }
   }
 

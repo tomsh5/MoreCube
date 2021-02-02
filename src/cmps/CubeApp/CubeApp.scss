@@ -9,9 +9,6 @@
     background: url('../../styles/imgs/9.png');
 }
 
-
-
-
 :root {
     --size: 300px;
 }
@@ -28,6 +25,10 @@ $small-size: 150px;
     @include for-normal-layout {
         min-height: 82vh;
     }
+
+    @include for-very-wide-layout {
+        min-height: 70vh;
+    }
 }
 
 .cube-app {
@@ -41,6 +42,10 @@ $small-size: 150px;
         flex-direction: column-reverse;
         min-height: 350px;
         margin-top: 2rem;
+    }
+
+    @include for-very-wide-layout {
+        margin-top: 8rem;
     }
 
     button {
@@ -79,11 +84,19 @@ $small-size: 150px;
             width: 300px;
 
             @include for-normal-layout {
-                margin-left: 1rem;
-                font-size: 12px;
+                margin-left: 0rem;
+                
 
                 .text-input {
-                    width: 9rem;
+                    width: 11rem;
+                }
+            }
+
+            @include for-very-wide-layout {
+                width: 500px;
+
+                .text-input {
+                    width: 20rem;
                 }
             }
         }
@@ -136,30 +149,6 @@ $small-size: 150px;
         display: none;
     }
 
-
-    .roll-cube-btn {
-        display: flex;
-        width: 32vw;
-        justify-content: center;
-
-        .roll-btn {
-            display: inline-block;
-            background-color: #dd114e;
-            color: rgb(255, 255, 255);
-            border: 0.0px solid rgb(255, 255, 255);
-            border-radius: 0.5rem;
-            padding: 0.1rem 0.2rem;
-            text-decoration: none;
-            font-weight: bold;
-            width: 7rem;
-            height: 2.5rem;
-        }
-
-        .roll-btn:hover {
-            background-color: #c21348
-        }
-    }
-
     .edit-container {
         width: 100%;
         display: block;
@@ -168,7 +157,6 @@ $small-size: 150px;
     }
 
     .preview-btn {
-        // margin-left: 0.5rem;
         font-size: 12px;
         display: inline-block;
         background-color: #db9898;
@@ -184,18 +172,6 @@ $small-size: 150px;
         background-color: #d19090;
     }
 
-    // .color-btn {
-    //     width: 2rem;
-    //     height: 1.5rem;
-    //     border: none;
-    //     font-size: 1rem;
-    //     text-align: center;
-    //     padding: 0;
-    //     border-radius: 0.3rem;
-    //     background-color: white;
-    //     // color: white;
-    // }
-
     .fa-palette{
         cursor: pointer;
     }
@@ -207,6 +183,10 @@ $small-size: 150px;
         border: 0.5px solid rgb(221, 221, 221);
         border-radius: 0.3rem;
         width: 11.7rem;
+
+        @include for-wide-layout {
+            width: 17.7rem;
+        }
     }
 
     ::placeholder {
@@ -227,6 +207,33 @@ $small-size: 150px;
             cursor: pointer;
             margin: 0;
         }
+    }
+}
+
+.roll-cube-btn {
+    display: flex;
+    width: 32vw;
+    justify-content: center;
+
+    @include for-very-wide-layout {
+       margin-left: 5rem;
+    }
+
+    .roll-btn {
+        display: inline-block;
+        background-color: #dd114e;
+        color: rgb(255, 255, 255);
+        border: 0.0px solid rgb(255, 255, 255);
+        border-radius: 0.5rem;
+        padding: 0.1rem 0.2rem;
+        text-decoration: none;
+        font-weight: bold;
+        width: 7rem;
+        height: 2.5rem;
+    }
+
+    .roll-btn:hover {
+        background-color: #c21348
     }
 }
 
@@ -474,10 +481,6 @@ $small-size: 150px;
 
             .text-input {
                 width: 12.4rem;
-                
-                @include for-normal-layout {
-                    width: 9.4rem;
-                }
             }
 
             .preview-btn {
@@ -489,12 +492,12 @@ $small-size: 150px;
 
                 @include for-normal-layout {
                     margin: 0rem;
-                    font-size: 12px;
                     width: 250px;
                     margin-right: 2rem;
 
                     .text-input {
-                        width: 9rem;
+                        width: 11rem;
+                        font-size: 16px;
                         // margin-right: 1rem;
                     }
                 }
